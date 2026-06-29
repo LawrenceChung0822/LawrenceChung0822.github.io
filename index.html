@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>钟群 — Localization PM | Translator | AI Explorer</title>
+  <meta name="description" content="钟群的个人主页 — 本地化项目经理、中英翻译、AI 探索者">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --font: 'Inter', -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --text: rgba(255,255,255,0.95);
+      --text-secondary: rgba(255,255,255,0.65);
+      --text-muted: rgba(255,255,255,0.4);
+      --accent: #7eb6ff;
+      --glass-bg: rgba(255,255,255,0.1);
+      --glass-border: rgba(255,255,255,0.18);
+      --glass-bg-strong: rgba(255,255,255,0.14);
+      --glass-border-strong: rgba(255,255,255,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.47;
+      letter-spacing: -0.374px;
+      -webkit-font-smoothing: antialiased;
+      background: #2a2a45;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ========== i18n ========== */
+    [data-en] { display: none; }
+    body.lang-en [data-zh] { display: none; }
+    body.lang-en [data-en] { display: unset; }
+
+    /* ========== Aurora ========== */
+    .aurora { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
+    .aurora-orb { position: absolute; border-radius: 50%; filter: blur(120px); will-change: transform; }
+    .orb-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(160,130,255,0.65) 0%, transparent 70%); top: -15%; left: -10%; animation: orbit1 12s ease-in-out infinite; }
+    .orb-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,150,200,0.6) 0%, transparent 70%); top: 20%; right: -15%; animation: orbit2 15s ease-in-out infinite; }
+    .orb-3 { width: 800px; height: 800px; background: radial-gradient(circle, rgba(100,200,255,0.6) 0%, transparent 70%); bottom: -10%; left: 20%; animation: orbit3 18s ease-in-out infinite; }
+    .orb-4 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,190,110,0.55) 0%, transparent 70%); top: 50%; left: -5%; animation: orbit4 10s ease-in-out infinite; }
+    .orb-5 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(120,255,220,0.55) 0%, transparent 70%); top: 70%; right: 5%; animation: orbit5 14s ease-in-out infinite; }
+
+    @keyframes orbit1 { 0%,100%{transform:translate(0,0) scale(1) rotate(0)} 25%{transform:translate(120px,80px) scale(1.15) rotate(90deg)} 50%{transform:translate(40px,160px) scale(.9) rotate(180deg)} 75%{transform:translate(-80px,60px) scale(1.1) rotate(270deg)} }
+    @keyframes orbit2 { 0%,100%{transform:translate(0,0) scale(1) rotate(0)} 25%{transform:translate(-100px,120px) scale(1.2) rotate(-90deg)} 50%{transform:translate(-160px,20px) scale(.85) rotate(-180deg)} 75%{transform:translate(-60px,-80px) scale(1.1) rotate(-270deg)} }
+    @keyframes orbit3 { 0%,100%{transform:translate(0,0) scale(1)} 20%{transform:translate(100px,-80px) scale(1.12)} 40%{transform:translate(160px,60px) scale(.88)} 60%{transform:translate(40px,140px) scale(1.15)} 80%{transform:translate(-80px,40px) scale(.92)} }
+    @keyframes orbit4 { 0%,100%{transform:translate(0,0) scale(1) rotate(0)} 33%{transform:translate(80px,-100px) scale(1.18) rotate(120deg)} 66%{transform:translate(-100px,80px) scale(.85) rotate(240deg)} }
+    @keyframes orbit5 { 0%,100%{transform:translate(0,0) scale(1) rotate(0)} 25%{transform:translate(-120px,-60px) scale(1.1) rotate(-90deg)} 50%{transform:translate(-40px,-140px) scale(.9) rotate(-180deg)} 75%{transform:translate(80px,-80px) scale(1.15) rotate(-270deg)} }
+
+    /* ========== Content ========== */
+    .page-content { position: relative; z-index: 1; }
+
+    /* ========== Nav ========== */
+    nav {
+      position: sticky; top: 0; z-index: 100; height: 52px;
+      background: rgba(42,42,69,0.5);
+      backdrop-filter: blur(40px) saturate(1.6);
+      -webkit-backdrop-filter: blur(40px) saturate(1.6);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    nav .nav-inner {
+      max-width: 980px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center; height: 100%;
+    }
+    .nav-logo { font-weight: 700; font-size: 18px; color: var(--text); letter-spacing: -0.5px; }
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color .3s; }
+    .nav-links a:hover { color: var(--text); }
+
+    .lang-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 980px; overflow: hidden;
+    }
+    .lang-btn {
+      padding: 4px 12px; font-size: 11px; font-weight: 600;
+      color: var(--text-muted); background: transparent;
+      border: none; cursor: pointer; transition: all .2s; font-family: var(--font);
+    }
+    .lang-btn.active { background: rgba(255,255,255,0.12); color: var(--text); }
+    .lang-btn:hover:not(.active) { color: var(--text-secondary); }
+
+    /* ========== Glass panels ========== */
+    .glass-section {
+      margin: 16px 24px; padding: 72px 48px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(40px) saturate(1.5);
+      -webkit-backdrop-filter: blur(40px) saturate(1.5);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      max-width: 1032px; margin-left: auto; margin-right: auto;
+    }
+    .glass-section .inner { max-width: 980px; margin: 0 auto; }
+
+    /* ========== Hero ========== */
+    #hero {
+      margin-top: 16px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(60px) saturate(1.8);
+      -webkit-backdrop-filter: blur(60px) saturate(1.8);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      max-width: 1032px; margin-left: auto; margin-right: auto;
+      overflow: hidden;
+    }
+    .hero-top { display: flex; align-items: center; gap: 28px; padding: 48px 48px 32px; }
+    .hero-avatar {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 42px; font-weight: 600; color: var(--text); flex-shrink: 0;
+    }
+    .hero-info { flex: 1; }
+    .hero-name {
+      font-size: 40px; font-weight: 700; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .hero-tag {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1px; padding: 4px 14px;
+      border-radius: 980px; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15); color: var(--text-secondary);
+    }
+    .hero-tagline { font-size: 16px; font-weight: 400; line-height: 1.5; color: var(--text-muted); }
+    .hero-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 0 48px; }
+    .hero-bio { padding: 32px 48px 40px; }
+    .hero-bio-title { font-size: 14px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 16px; }
+    .hero-bio-text {
+      font-size: 15px; font-weight: 400; line-height: 1.8;
+      color: var(--text-secondary); max-width: 720px;
+    }
+    .hero-bio-text p { margin-bottom: 14px; }
+    .hero-bio-text p:last-child { margin-bottom: 0; }
+    .hero-bio-text .hl { color: var(--text); font-weight: 500; }
+    .hero-bio-ctas { margin-top: 28px; display: flex; gap: 14px; }
+
+    /* ========== Buttons ========== */
+    .btn-primary {
+      display: inline-block; background: rgba(126,182,255,0.2); border: 1px solid rgba(126,182,255,0.4);
+      color: var(--accent); padding: 10px 28px; border-radius: 980px;
+      font-size: 15px; font-weight: 600; text-decoration: none;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: all .3s;
+    }
+    .btn-primary:hover { background: rgba(126,182,255,0.35); color: #fff; text-decoration: none; }
+    .btn-outline {
+      display: inline-block; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);
+      color: var(--text-secondary); padding: 10px 28px; border-radius: 980px;
+      font-size: 15px; font-weight: 500; text-decoration: none;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: all .3s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.12); color: var(--text); text-decoration: none; }
+
+    /* ========== Section headings ========== */
+    .sec-heading {
+      font-size: 40px; font-weight: 700; line-height: 1.1; letter-spacing: -1px; margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.65) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .sec-sub { font-size: 18px; font-weight: 400; color: var(--text-muted); margin-bottom: 48px; }
+
+    /* ========== About cards ========== */
+    #about { text-align: left; }
+    .ability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; }
+    .ability-card {
+      background: var(--glass-bg-strong); border: 1px solid var(--glass-border-strong);
+      border-radius: 16px; padding: 32px 24px;
+      backdrop-filter: blur(30px) saturate(1.4); -webkit-backdrop-filter: blur(30px) saturate(1.4);
+      transition: all .4s ease;
+    }
+    .ability-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-4px); box-shadow: 0 8px 40px rgba(0,0,0,0.2); }
+    .ability-icon { font-size: 36px; margin-bottom: 18px; }
+    .ability-card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.2px; color: var(--text); margin-bottom: 8px; }
+    .ability-card p { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--text-secondary); }
+
+    /* ========== Projects ========== */
+    #projects { text-align: left; }
+    .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; text-align: left; }
+    .project-card {
+      background: var(--glass-bg-strong); border: 1px solid var(--glass-border-strong);
+      border-radius: 16px; padding: 32px 24px;
+      backdrop-filter: blur(30px) saturate(1.4); -webkit-backdrop-filter: blur(30px) saturate(1.4);
+      display: flex; flex-direction: column; justify-content: space-between; min-height: 180px;
+      transition: all .4s ease;
+    }
+    .project-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-4px); box-shadow: 0 8px 40px rgba(0,0,0,0.2); }
+    .project-card.featured { grid-column: 1 / -1; }
+    .project-card h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.2px; color: var(--text); margin-bottom: 6px; }
+    .project-card p { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--text-secondary); margin-bottom: 16px; }
+    .project-tags { display: flex; gap: 8px; }
+    .project-tag { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 980px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-muted); }
+
+    /* ========== Blog ========== */
+    #blog { text-align: left; }
+    .blog-placeholder {
+      background: var(--glass-bg-strong); border: 1px solid var(--glass-border-strong);
+      border-radius: 16px; padding: 56px;
+      backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      color: var(--text-muted); font-size: 16px; font-weight: 500;
+    }
+
+    /* ========== Contact ========== */
+    #contact { text-align: left; }
+    .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 8px; padding: 10px 22px;
+      border-radius: 980px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      color: var(--text-secondary); font-size: 14px; font-weight: 500;
+      text-decoration: none; transition: all .3s;
+    }
+    .contact-link:hover { background: rgba(255,255,255,0.15); color: var(--text); text-decoration: none; transform: translateY(-2px); }
+    .contact-link svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+    /* ========== Footer ========== */
+    footer { padding: 24px; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+    /* ========== Animations ========== */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in:nth-child(2) { transition-delay: .1s; }
+    .fade-in:nth-child(3) { transition-delay: .2s; }
+    .fade-in:nth-child(4) { transition-delay: .3s; }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 834px) {
+      .hero-name { font-size: 32px; letter-spacing: -1px; }
+      .hero-top { padding: 36px 28px 24px; gap: 20px; }
+      .hero-bio { padding: 24px 28px 32px; }
+      .hero-divider { margin: 0 28px; }
+      .hero-avatar { width: 80px; height: 80px; font-size: 34px; }
+      .sec-heading { font-size: 32px; }
+      .ability-grid { grid-template-columns: 1fr; }
+      .project-grid { grid-template-columns: 1fr; }
+      .glass-section, #hero { margin: 12px 16px; }
+      .nav-links { gap: 16px; }
+    }
+    @media (max-width: 480px) {
+      .hero-top { flex-direction: column; text-align: center; padding: 32px 20px 24px; }
+      .hero-tags { justify-content: center; }
+      .hero-name { font-size: 28px; }
+      .hero-bio { padding: 20px 20px 28px; }
+      .hero-divider { margin: 0 20px; }
+      .hero-bio-ctas { flex-direction: column; align-items: stretch; text-align: center; }
+      .sec-heading { font-size: 28px; }
+      .nav-links a { font-size: 12px; }
+      .nav-links { gap: 14px; }
+      .glass-section, #hero { border-radius: 18px; }
+      .glass-section { padding: 48px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Aurora -->
+  <div class="aurora">
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+    <div class="aurora-orb orb-4"></div>
+    <div class="aurora-orb orb-5"></div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Nav -->
+    <nav>
+      <div class="nav-inner">
+        <span class="nav-logo">ZQ</span>
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="#about"><span data-zh>关于</span><span data-en>About</span></a>
+            <a href="#projects"><span data-zh>项目</span><span data-en>Projects</span></a>
+            <a href="#blog"><span data-zh>博客</span><span data-en>Blog</span></a>
+            <a href="#contact"><span data-zh>联系</span><span data-en>Contact</span></a>
+          </div>
+          <div class="lang-toggle">
+            <button class="lang-btn active" data-lang="zh">中</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero">
+      <div class="hero-top fade-in">
+        <div class="hero-avatar">Q</div>
+        <div class="hero-info">
+          <h1 class="hero-name"><span data-zh>钟群</span><span data-en>Zhong Qun</span></h1>
+          <div class="hero-tags">
+            <span class="hero-tag" data-zh>本地化项目经理</span><span class="hero-tag" data-en>Localization PM</span>
+            <span class="hero-tag" data-zh>翻译</span><span class="hero-tag" data-en>Translator</span>
+            <span class="hero-tag" data-zh>AI 探索者</span><span class="hero-tag" data-en>AI explorer</span>
+          </div>
+          <p class="hero-tagline">
+            <span data-zh>致力于用 AI 提升翻译质量与项目效率，把自己当产品持续打磨。</span>
+            <span data-en>Leveraging AI to elevate translation quality and project efficiency. Treating myself as a product — ship fast, iterate often.</span>
+          </p>
+        </div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-bio fade-in">
+        <p class="hero-bio-title">About</p>
+        <!-- 中文 bio -->
+        <div class="hero-bio-text" data-zh>
+          <p>我目前是<span class="hl">小米的本地化项目经理</span>，主要负责智能手机、IoT 设备及小米汽车的 UI 本地化，覆盖 <span class="hl">80+ 语言</span>市场。工作范围主要包括三个部分：中英翻译（英文作为多语言的源语言），项目管理（小米EV），AI Native 探索。</p>
+          <p>我于 2024 年 5 月进入本地化行业，最初从事游戏本地化，之后转向视频本地化（短剧）。2025 年 7 月，我加入小米，负责全球范围内的软硬件本地化工作。不到一年时间，我从入门到独立负责小米汽车这样的高复杂度本地化项目。这段经历让我相信：<span class="hl">成长源于勇于挑战复杂，而非等待万事俱备。</span></p>
+          <p>我现在最关注的方向是探索 <span class="hl">AI Native 的本地化工作范式</span>，并且正在小米内部的本地化平台 Collie 上搭建 AI Agent，从流程自动化、质量保障、跨语言项目管理等维度，重新思考本地化的工作方式。</p>
+          <p>我觉得人也应该像产品一样——<span class="hl">快速交付，持续迭代。</span></p>
+        </div>
+        <!-- English bio -->
+        <div class="hero-bio-text" data-en>
+          <p>I'm a <span class="hl">Localization Project Manager at Xiaomi</span>, where I lead UI localization for smartphones, IoT devices, and Xiaomi EV across <span class="hl">80+ languages</span>.</p>
+          <p>I entered the localization industry in May 2024 — starting with game localization, then moving into video localization (short dramas). In July 2025, I joined Xiaomi to take on software and hardware localization at a global scale. Within a year, I went from learning the basics to managing full-scale product localization at one of the world's largest tech companies. This pace taught me that <span class="hl">growth comes from jumping into complexity, not waiting until you're ready.</span></p>
+          <p>Now, I'm exploring what an <span class="hl">AI-native localization workflow</span> looks like. I'm building AI Agents on Collie, Xiaomi's in-house localization management platform, rethinking how we approach process automation, quality assurance, and cross-language project management from the ground up.</p>
+          <p>I believe in treating yourself as a product — <span class="hl">ship fast, iterate often.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="glass-section">
+      <div class="inner">
+        <h2 class="sec-heading fade-in"><span data-zh>三个核心方向</span><span data-en>Three core areas</span></h2>
+        <p class="sec-sub fade-in"><span data-zh>翻译质量 · 项目效率 · AI 赋能</span><span data-en>Translation quality · Project efficiency · AI empowerment</span></p>
+        <div class="ability-grid">
+          <div class="ability-card fade-in">
+            <div class="ability-icon">🌐</div>
+            <h3><span data-zh>翻译与本地化</span><span data-en>Translation & localization</span></h3>
+            <p><span data-zh>中→英翻译，关注质量与效率。熟悉软件/硬件本地化流程、术语管理与风格指南。</span><span data-en>Chinese-to-English translation with a focus on quality and efficiency. Experienced in software/hardware localization workflows, terminology management, and style guides.</span></p>
+          </div>
+          <div class="ability-card fade-in">
+            <div class="ability-icon">📋</div>
+            <h3><span data-zh>项目管理</span><span data-en>Project management</span></h3>
+            <p><span data-zh>管理英文到 80+ 多语言的本地化项目。擅长流程设计、供应商管理与跨团队协作。</span><span data-en>Managing localization projects from English into 80+ languages. Skilled in process design, vendor management, and cross-team collaboration.</span></p>
+          </div>
+          <div class="ability-card fade-in">
+            <div class="ability-icon">🤖</div>
+            <h3><span data-zh>AI 探索</span><span data-en>AI exploration</span></h3>
+            <p><span data-zh>探索 AI 在翻译和项目管理中的应用。搭建自动化工作流，提升个人与团队产品力。</span><span data-en>Exploring AI applications in translation and project management. Building automated workflows to amplify personal and team productivity.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="glass-section">
+      <div class="inner">
+        <h2 class="sec-heading fade-in"><span data-zh>项目</span><span data-en>Projects</span></h2>
+        <p class="sec-sub fade-in"><span data-zh>正在做的事情</span><span data-en>What I'm working on</span></p>
+        <div class="project-grid">
+          <div class="project-card featured fade-in">
+            <div>
+              <h3><span data-zh>个人知识库</span><span data-en>Personal knowledge vault</span></h3>
+              <p><span data-zh>AI 驱动的个人知识管理系统，基于 Markdown + Obsidian + Claude Code。四层分离架构，数据可迁移。</span><span data-en>AI-powered personal knowledge management system built on Markdown + Obsidian + Claude Code. Four-layer decoupled architecture for full data portability.</span></p>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">AI</span>
+              <span class="project-tag"><span data-zh>知识管理</span><span data-en>Knowledge mgmt</span></span>
+              <span class="project-tag">Markdown</span>
+            </div>
+          </div>
+          <div class="project-card fade-in">
+            <div>
+              <h3><span data-zh>项目名称占位</span><span data-en>Project placeholder</span></h3>
+              <p><span data-zh>项目简介占位 — 后续替换为实际项目</span><span data-en>Project description placeholder — to be replaced</span></p>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag"><span data-zh>标签</span><span data-en>Tag</span></span>
+            </div>
+          </div>
+          <div class="project-card fade-in">
+            <div>
+              <h3><span data-zh>项目名称占位</span><span data-en>Project placeholder</span></h3>
+              <p><span data-zh>项目简介占位 — 后续替换为实际项目</span><span data-en>Project description placeholder — to be replaced</span></p>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag"><span data-zh>标签</span><span data-en>Tag</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section id="blog" class="glass-section">
+      <div class="inner">
+        <h2 class="sec-heading fade-in"><span data-zh>思考与分享</span><span data-en>Thoughts & insights</span></h2>
+        <p class="sec-sub fade-in"><span data-zh>关于翻译、项目管理和 AI 的观察</span><span data-en>Observations on translation, project management, and AI</span></p>
+        <div class="blog-placeholder fade-in">Coming soon</div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="glass-section">
+      <div class="inner">
+        <h2 class="sec-heading fade-in"><span data-zh>联系我</span><span data-en>Get in touch</span></h2>
+        <p class="sec-sub fade-in"><span data-zh>欢迎通过以下方式找到我</span><span data-en>Feel free to reach out through any of the following</span></p>
+        <div class="contact-links fade-in">
+          <a href="mailto:zq16219@gmail.com" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Email
+          </a>
+          <a href="https://github.com/" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://linkedin.com/" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://twitter.com/" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X / Twitter
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>&copy; 2026 <span data-zh>钟群</span><span data-en>Zhong Qun</span></footer>
+
+  </div>
+
+  <script>
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Global language toggle
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.body.classList.toggle('lang-en', lang === 'en');
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
+      });
+    });
+  </script>
+</body>
+</html>
