@@ -49,6 +49,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Classical architecture background — fixed, faded to a whisper */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url('../assets/images/doric-column-cc0.jpg') center / cover no-repeat;
+  z-index: -2;
+  opacity: 0.15;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--paper) 0%,
+    rgba(244, 241, 236, 0.82) 20%,
+    rgba(244, 241, 236, 0.82) 80%,
+    var(--paper) 100%
+  );
+  z-index: -1;
+}
+
 /* --- i18n --- */
 [data-en] { display: none; }
 body.lang-en [data-zh] { display: none; }
@@ -527,6 +551,9 @@ footer {
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .nav-links { display: none; }
+
+  /* Reduce background image on mobile for performance + readability */
+  body::before { opacity: 0.10; }
 
   #hero { min-height: 70vh; padding: 60px 24px 40px; }
   .hero-meta { gap: 32px; }
