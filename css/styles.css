@@ -36,12 +36,25 @@
 }
 
 /* --- Base --- */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: var(--sans);
   color: var(--ink);
-  background: var(--paper);
+  /* Brutal-force background: image + paper tint in one declaration */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(244, 241, 236, 0.82) 0%,
+      rgba(244, 241, 236, 0.78) 20%,
+      rgba(244, 241, 236, 0.78) 80%,
+      rgba(244, 241, 236, 0.82) 100%
+    ),
+    url('../assets/images/pompeii-fresco-pd.jpg') center / cover no-repeat,
+    var(--paper);
+  background-attachment: fixed;
   font-size: 16px;
   line-height: 1.6;
   letter-spacing: -0.011em;
@@ -49,29 +62,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Classical architecture background — fixed, faded to a whisper */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: url('../assets/images/doric-column-cc0.jpg') center / cover no-repeat;
-  z-index: -2;
-  opacity: 0.15;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    var(--paper) 0%,
-    rgba(244, 241, 236, 0.82) 20%,
-    rgba(244, 241, 236, 0.82) 80%,
-    var(--paper) 100%
-  );
-  z-index: -1;
-}
+/* (legacy: classical bg now on body background, no pseudo-elements needed) */
 
 /* --- i18n --- */
 [data-en] { display: none; }
