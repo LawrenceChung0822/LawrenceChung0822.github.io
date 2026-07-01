@@ -174,6 +174,10 @@ nav.scrolled { border-bottom-color: var(--border); }
   color: var(--accent);
   margin-bottom: 24px;
 }
+.hero-eyebrow span[data-en] {
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
 
 .hero-name {
   font-family: var(--serif);
