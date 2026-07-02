@@ -59,13 +59,19 @@ function updateTimeline() {
     progress.style.left = `${trackPadding}px`;
   }
 
-  // 高亮当前节点（基于滚动比例而非视口位置）
+  // 高亮当前节点（基于滚动比例，最后一个节点需要完整滚动才高亮）
   const nodes = document.querySelectorAll('.timeline-node');
   const nodeCount = nodes.length;
   if (nodeCount === 0) return;
 
-  // 将 ratio (0~1) 映射到节点索引 (0 ~ nodeCount-1)
-  const activeIndex = Math.min(nodeCount - 1, Math.floor(ratio * nodeCount));
+  // 将 ratio (0~1) 映射到节点索引
+  // 使用更平滑的映射：每个节点占据等宽区间，但最后一个节点需要 ratio > 0.8 才激活
+  let activeIndex;
+  if (ratio >= 0.85) {
+    activeIndex = nodeCount - 1;
+  } else {
+    activeIndex = Math.min(nodeCount - 2, Math.floor(ratio * nodeCount / 0.85));
+  }
 
   nodes.forEach((node, index) => {
     node.classList.toggle('active', index === activeIndex);

@@ -331,31 +331,24 @@ section {
 }
 .timeline-node.active { opacity: 1; }
 
-/* Company label above dot */
-.timeline-node::before {
-  content: attr(data-company);
+/* Company logo above dot */
+.timeline-logo {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  transition: color 0.4s ease;
-  white-space: nowrap;
+  height: 28px;
+  width: auto;
+  max-width: 80px;
+  object-fit: contain;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+  filter: grayscale(100%);
 }
-.timeline-node.active::before {
-  color: var(--accent);
+.timeline-node.active .timeline-logo {
+  opacity: 1;
+  filter: grayscale(0%);
 }
-
-/* Specific company labels */
-.timeline-node[data-company="huai"]::before { content: '互爱科技'; }
-.timeline-node[data-company="youdao"]::before { content: '网易有道'; }
-.timeline-node[data-company="xiaomi"]::before { content: 'Xiaomi'; }
-.timeline-node[data-company="xiaomi-ev"]::before { content: 'Xiaomi EV'; }
-.timeline-node[data-company="xiaomi-ai"]::before { content: 'Xiaomi'; }
 
 .timeline-dot {
   width: 12px;
@@ -623,7 +616,7 @@ footer {
     opacity: 1;
     margin-bottom: 40px;
   }
-  .timeline-node::before {
+  .timeline-logo {
     display: none;
   }
   .timeline-dot { margin-bottom: 0; margin-top: 6px; }
