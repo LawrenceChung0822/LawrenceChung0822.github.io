@@ -59,24 +59,16 @@ function updateTimeline() {
     progress.style.left = `${trackPadding}px`;
   }
 
-  // 高亮当前节点
+  // 高亮当前节点（基于滚动比例而非视口位置）
   const nodes = document.querySelectorAll('.timeline-node');
-  const viewportCenter = window.innerWidth / 2;
-  let closest = null;
-  let minDist = Infinity;
+  const nodeCount = nodes.length;
+  if (nodeCount === 0) return;
 
-  nodes.forEach(node => {
-    const nodeRect = node.getBoundingClientRect();
-    const nodeCenter = nodeRect.left + nodeRect.width / 2;
-    const dist = Math.abs(nodeCenter - viewportCenter);
-    if (dist < minDist) {
-      minDist = dist;
-      closest = node;
-    }
-  });
+  // 将 ratio (0~1) 映射到节点索引 (0 ~ nodeCount-1)
+  const activeIndex = Math.min(nodeCount - 1, Math.floor(ratio * nodeCount));
 
-  nodes.forEach(node => {
-    node.classList.toggle('active', node === closest);
+  nodes.forEach((node, index) => {
+    node.classList.toggle('active', index === activeIndex);
   });
 }
 
