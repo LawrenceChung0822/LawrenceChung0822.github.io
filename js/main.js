@@ -76,7 +76,7 @@ function updateTimeline() {
   });
 
   nodes.forEach(node => {
-    node.classList.toggle('active', node === closest && minDist < window.innerWidth * 0.25);
+    node.classList.toggle('active', node === closest);
   });
 }
 
